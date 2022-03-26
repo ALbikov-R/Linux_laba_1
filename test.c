@@ -252,12 +252,13 @@ void _MDirWr(const char *_dir, const char *_path)
 }
 void _Dwrite(const char *_path, unsigned _size)
 {
-	char _buf[BUFSIZ],c;
-	int _file = open(_path,O_RDWR);
-	while(read(_file, &c, 1) == 1) 
-		write(File_arch, &c, 1);
-	write(File_arch,"\n",1);
-	close(_file);	
+	 char *block;
+ block =(char*)malloc(_size*sizeof(char));
+    int in, out;
+    int nread;
+    in = open(_path, O_RDONLY);
+    while((nread = read(in, block, sizeof(block))) > 0)
+     write(File_arch, block, nread);	
 }
 int _MDwrite (const struct dirent * _file, const char * _path)
 {
